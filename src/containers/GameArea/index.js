@@ -14,7 +14,7 @@ class GameArea extends Component {
 
     render() {
         return (
-            <div className="game-area col-12 col-md-6">GameArea</div>
+            <div className="game-area col-12 col-lg-7">GameArea</div>
         )
     }
 }

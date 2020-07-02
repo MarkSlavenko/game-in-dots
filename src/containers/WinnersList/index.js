@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {
     loadWinners,
 } from '../../actions';
+import List from "../../components/List";
 
 class WinnersList extends Component {
 
@@ -13,8 +14,12 @@ class WinnersList extends Component {
     };
 
     render() {
+
         return (
-            <div className="winners-list col-12 col-md-6">WinnersList</div>
+            <div className="winners-list col-12 col-lg-5">
+                <h3>Leader Board (last 10)</h3>
+                <List list={this.props.winnersList}/>
+            </div>
         )
     }
 }
