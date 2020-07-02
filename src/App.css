@@ -1,3 +1,13 @@
 .App {
   text-align: center;
 }
+
+.main-content {
+  border: 2px solid silver;
+  border-radius: 3px;
+}
+
+.main-content .col-12 {
+  border: 1px solid silver;
+  padding: 10px;
+}

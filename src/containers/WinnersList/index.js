@@ -14,7 +14,7 @@ class WinnersList extends Component {
 
     render() {
         return (
-            <div className="winners-list">WinnersList</div>
+            <div className="winners-list col-12 col-md-6">WinnersList</div>
         )
     }
 }
