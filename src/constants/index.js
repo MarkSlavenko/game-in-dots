@@ -1,1 +1,1 @@
-export const SET_WINNER_LIST = 'SET_WINNER_LIST';
+export const SET_WINNERS_LIST = 'SET_WINNERS_LIST';
