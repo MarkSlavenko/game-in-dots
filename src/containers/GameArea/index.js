@@ -24,15 +24,20 @@ class GameArea extends Component {
             modes.push(mode);
         }
 
+        let message = "Please, select game mode to start";
+        if (Object.keys(this.props.modeSettings).length) {
+            message = "Enter the name and press Play";
+        }
+
         return (
-            <div className="game-area col-12 col-lg-7 text-center">
+            <div className="game-area col-12 col-xl-7 text-center">
                 <h3>Game area</h3>
                 <SettingsMenu
                 modes={modes}
                 setMode={this.props.setCurrentMode}
                 />
                 <Message
-                text="Please, select game mode to start"
+                text={message}
                 />
                 <Grid
                 size={this.props.modeSettings.field}

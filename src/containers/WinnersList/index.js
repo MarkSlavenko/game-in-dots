@@ -16,7 +16,7 @@ class WinnersList extends Component {
     render() {
 
         return (
-            <div className="winners-list col-12 col-lg-5">
+            <div className="winners-list col-12 col-xl-5">
                 <h3>Leader Board (last 10)</h3>
                 <List list={this.props.winnersList}/>
             </div>

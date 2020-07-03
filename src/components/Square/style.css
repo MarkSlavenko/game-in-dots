@@ -1,6 +1,6 @@
 .square-button {
-    width:  40px;
-    height: 40px;
+    width:  30px;
+    height: 30px;
     background-color: white;
     border: 1px solid grey;
     padding: 0;
@@ -16,4 +16,20 @@
 
 .square-button:hover {
     background-color: #ecf0f1;
+}
+
+
+@media (min-width: 576px) {
+    .square-button {
+        width:  35px;
+        height: 35px;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .square-button {
+        width:  40px;
+        height: 40px;
+    }
 }
