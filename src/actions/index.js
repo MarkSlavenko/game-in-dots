@@ -16,7 +16,12 @@ export const loadWinners = () => {
                 error => console.log('Error getting list of winners!', error)
             )
             .then((list) => {
-                const lastWinners = list.slice(list.length-10, list.length).reverse(); // take 10 last winners
+                let lastWinners;
+                if (list.length >= 10) {
+                    lastWinners = list.slice(list.length-10, list.length).reverse(); // take 10 last winners
+                } else {
+                    lastWinners = list.slice();
+                }
                 dispatch(setWinnersList(lastWinners));
             });
     }

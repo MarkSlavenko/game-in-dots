@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import "./style.css";
+import SettingsMenu from "../../components/SettingsMenu";
+import Grid from "../../components/Grid";
+import Message from "../../components/Message";
 // import {connect} from 'react-redux';
 
 // import {
@@ -14,7 +17,16 @@ class GameArea extends Component {
 
     render() {
         return (
-            <div className="game-area col-12 col-lg-7">GameArea</div>
+            <div className="game-area col-12 col-lg-7 text-center">
+                <h3>Game area</h3>
+                <SettingsMenu/>
+                <Message
+                text="Test message"
+                />
+                <Grid
+                size={5}
+                />
+            </div>
         )
     }
 }

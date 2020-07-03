@@ -1,0 +1,8 @@
+.settings-menu button {
+    width: 100px;
+    color: white;
+    background-color: grey;
+    padding: 5px 0;
+    font-size: 1em;
+    font-weight: bold;
+}

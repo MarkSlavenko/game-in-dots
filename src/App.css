@@ -1,9 +1,12 @@
 .main-content {
   border: 2px solid silver;
   border-radius: 3px;
+  color: #34495e;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
-.main-content .col-12 {
+.main-content > .row > div {
   border: 1px solid silver;
   padding: 30px;
 }
