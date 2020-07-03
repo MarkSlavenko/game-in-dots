@@ -7,13 +7,14 @@ import {connect} from 'react-redux';
 
 import {
     // loadWinners,
-    loadModes
+    loadModes,
+    setMode
 } from '../../actions';
 
 class GameArea extends Component {
 
     componentDidMount = async () => {
-        this.props.loadModes();
+        await this.props.loadModes();
     };
 
     render() {
@@ -27,12 +28,14 @@ class GameArea extends Component {
             <div className="game-area col-12 col-lg-7 text-center">
                 <h3>Game area</h3>
                 <SettingsMenu
-                modes={modes}/>
+                modes={modes}
+                setMode={this.props.setCurrentMode}
+                />
                 <Message
-                text="Test message"
+                text="Please, select game mode to start"
                 />
                 <Grid
-                size={5}
+                size={this.props.modeSettings.field}
                 />
             </div>
         )
@@ -42,6 +45,7 @@ class GameArea extends Component {
 const mapStateToProps = store => {
     return {
         modes: store.game.modes,
+        modeSettings: store.game.currentMode,
     }
 };
 
@@ -50,6 +54,10 @@ const mapDispatchToProps = dispatch => {
         loadModes: () => {
             dispatch(loadModes())
         },
+        setCurrentMode: (mode) => {
+            dispatch(setMode(mode))
+        },
+
     })
 };
 

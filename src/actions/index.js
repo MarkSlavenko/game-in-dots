@@ -26,7 +26,7 @@ export const setModes = modes => {
 };
 
 export const loadWinners = () => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         fetch("https://starnavi-frontend-test-task.herokuapp.com/winners")
             .then(response => response.json(),
                 error => console.log('Error getting list of winners!', error)
@@ -36,7 +36,7 @@ export const loadWinners = () => {
                 if (list.length >= 10) {
                     lastWinners = list.slice(list.length-10, list.length).reverse(); // take 10 last winners
                 } else {
-                    lastWinners = list.slice();
+                    lastWinners = list.slice().reverse();
                 }
                 dispatch(setWinnersList(lastWinners));
             });
@@ -44,7 +44,7 @@ export const loadWinners = () => {
 };
 
 export const loadModes = () => {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         fetch("https://starnavi-frontend-test-task.herokuapp.com/game-settings")
             .then(response => response.json(),
                 error => console.log('Error getting list of modes!', error)
@@ -52,5 +52,12 @@ export const loadModes = () => {
             .then((modes) => {
                 dispatch(setModes(modes));
             });
+    }
+};
+
+export const setMode = (mode) => {
+    return (dispatch, getState) => {
+        const modeData = getState().game.modes[mode];
+        dispatch(setCurrentMode(modeData));
     }
 };
