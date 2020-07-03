@@ -1,1 +1,3 @@
 export const SET_WINNERS_LIST = 'SET_WINNERS_LIST';
+export const SET_CURRENT_MODE = 'SET_CURRENT_MODE';
+export const SET_MODES = 'SET_MODES';

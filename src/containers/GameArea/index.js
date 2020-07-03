@@ -3,23 +3,31 @@ import "./style.css";
 import SettingsMenu from "../../components/SettingsMenu";
 import Grid from "../../components/Grid";
 import Message from "../../components/Message";
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 
-// import {
-//     loadWinners,
-// } from '../../actions';
+import {
+    // loadWinners,
+    loadModes
+} from '../../actions';
 
 class GameArea extends Component {
 
-    // componentDidMount = async () => {
-    //
-    // };
+    componentDidMount = async () => {
+        this.props.loadModes();
+    };
 
     render() {
+
+        const modes = [];
+        for (let mode in this.props.modes) {
+            modes.push(mode);
+        }
+
         return (
             <div className="game-area col-12 col-lg-7 text-center">
                 <h3>Game area</h3>
-                <SettingsMenu/>
+                <SettingsMenu
+                modes={modes}/>
                 <Message
                 text="Test message"
                 />
@@ -31,18 +39,21 @@ class GameArea extends Component {
     }
 }
 
-// const mapStateToProps = store => {
-//     return {
-//         winnersList: store.game.winnersList,
-//     }
-// };
-//
-// const mapDispatchToProps = dispatch => {
-//     return ({
-//         loadWinners: () => {
-//             dispatch(loadWinners())
-//         },
-//     })
-// };
+const mapStateToProps = store => {
+    return {
+        modes: store.game.modes,
+    }
+};
 
-export default GameArea;
+const mapDispatchToProps = dispatch => {
+    return ({
+        loadModes: () => {
+            dispatch(loadModes())
+        },
+    })
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(GameArea);

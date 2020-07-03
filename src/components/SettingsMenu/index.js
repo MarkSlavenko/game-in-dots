@@ -3,16 +3,20 @@ import "./style.css";
 
 const SettingsMenu = (props) => {
 
+    let options = [];
+    if (props.modes) {
+        options = props.modes.map(option =>
+            <option value="option">{option}</option>
+        )
+    }
+
     return (
         <div className="col-12 settings-menu">
             <form>
                 <div className="form-row align-items-center">
                     <div className="col my-1">
                         <select className="custom-select">
-                            <option value="0" disabled selected>Pick game mode</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {options}
                         </select>
                     </div>
                     <div className="col my-1">
