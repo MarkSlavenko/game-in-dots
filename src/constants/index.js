@@ -1,3 +1,6 @@
 export const SET_WINNERS_LIST = 'SET_WINNERS_LIST';
 export const SET_CURRENT_MODE = 'SET_CURRENT_MODE';
 export const SET_MODES = 'SET_MODES';
+export const SET_MESSAGE = 'SET_MESSAGE';
+export const SET_GAME_STATUS = 'SET_GAME_STATUS';
+export const SET_PLAYER_NAME = 'SET_PLAYER_NAME';

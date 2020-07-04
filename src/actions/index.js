@@ -1,7 +1,10 @@
 import {
     SET_WINNERS_LIST,
     SET_CURRENT_MODE,
-    SET_MODES
+    SET_MODES,
+    SET_MESSAGE,
+    SET_GAME_STATUS,
+    SET_PLAYER_NAME
 } from '../constants/index.js';
 
 export const setWinnersList = list => {
@@ -24,6 +27,28 @@ export const setModes = modes => {
         modes
     })
 };
+
+export const setMessage = message => {
+    return({
+        type: SET_MESSAGE,
+        message
+    })
+};
+
+export const setGameStatus = status => {
+    return({
+        type: SET_GAME_STATUS,
+        status
+    })
+};
+
+export const setPlayerName = name => {
+    return({
+        type: SET_PLAYER_NAME,
+        name
+    })
+};
+
 
 export const loadWinners = () => {
     return (dispatch) => {
@@ -58,6 +83,15 @@ export const loadModes = () => {
 export const setMode = (mode) => {
     return (dispatch, getState) => {
         const modeData = getState().game.modes[mode];
+        dispatch(setGameStatus(false));
         dispatch(setCurrentMode(modeData));
+    }
+};
+
+export const startGame = (name) => {
+    return (dispatch) => {
+        dispatch(setPlayerName(name));
+        dispatch(setGameStatus(true));
+        dispatch(setMessage("The game is on!"));
     }
 };

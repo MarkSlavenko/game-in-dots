@@ -6,15 +6,17 @@ import Message from "../../components/Message";
 import {connect} from 'react-redux';
 
 import {
-    // loadWinners,
     loadModes,
-    setMode
+    setMode,
+    setMessage,
+    startGame
 } from '../../actions';
 
 class GameArea extends Component {
 
     componentDidMount = async () => {
-        await this.props.loadModes();
+        this.props.loadModes();
+        this.props.setMessage("Please, select game mode");
     };
 
     render() {
@@ -24,23 +26,20 @@ class GameArea extends Component {
             modes.push(mode);
         }
 
-        let message = "Please, select game mode to start";
-        if (Object.keys(this.props.modeSettings).length) {
-            message = "Enter the name and press Play";
-        }
-
         return (
             <div className="game-area col-12 col-xl-7 text-center">
                 <h3>Game area</h3>
                 <SettingsMenu
-                modes={modes}
-                setMode={this.props.setCurrentMode}
+                    modes={modes}
+                    setMode={this.props.setCurrentMode}
+                    setMessage={this.props.setMessage}
+                    startGame={this.props.startGame}
                 />
                 <Message
-                text={message}
+                    text={this.props.message}
                 />
                 <Grid
-                size={this.props.modeSettings.field}
+                    size={this.props.modeSettings.field}
                 />
             </div>
         )
@@ -51,6 +50,7 @@ const mapStateToProps = store => {
     return {
         modes: store.game.modes,
         modeSettings: store.game.currentMode,
+        message: store.game.message
     }
 };
 
@@ -62,7 +62,12 @@ const mapDispatchToProps = dispatch => {
         setCurrentMode: (mode) => {
             dispatch(setMode(mode))
         },
-
+        setMessage: (message) => {
+            dispatch(setMessage(message))
+        },
+        startGame: (name) => {
+            dispatch(startGame(name))
+        }
     })
 };
 
