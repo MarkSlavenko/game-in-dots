@@ -85,6 +85,7 @@ export const setMode = (mode) => {
         const modeData = getState().game.modes[mode];
         dispatch(setGameStatus(false));
         dispatch(setCurrentMode(modeData));
+        dispatch(setMessage("Enter the name and press \"Play\""));
     }
 };
 

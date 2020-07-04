@@ -10,7 +10,9 @@ const SettingsMenu = (props) => {
     let options = [];
     if (props.modes) {
         options = props.modes.map((option, index)=>
-            <option key={"option" + index} value={option}>{option}</option>
+            <option key={"option" + index} value={option}>
+                {option.split("Mode")}
+            </option>
         )
     }
 
@@ -21,7 +23,6 @@ const SettingsMenu = (props) => {
     useEffect(() => {  //callback to set gameMode and setMessage after selecting the mode
         if (didMountRef.current) {
             props.setMode(gameMode);
-            props.setMessage("Enter the name and press \"Play\"");
         } else {
             didMountRef.current = true;
         }
@@ -30,7 +31,6 @@ const SettingsMenu = (props) => {
     const handleChangeName = (event) => {
       changeName(event.target.value);
     };
-
 
     const formOnSubmit = (event) => {
         event.preventDefault();

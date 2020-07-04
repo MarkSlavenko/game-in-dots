@@ -6,3 +6,7 @@
     font-size: 1em;
     font-weight: bold;
 }
+
+.settings-menu select {
+    text-transform: capitalize;
+}

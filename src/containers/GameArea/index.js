@@ -14,13 +14,12 @@ import {
 
 class GameArea extends Component {
 
-    componentDidMount = async () => {
+    componentDidMount = () => {
         this.props.loadModes();
         this.props.setMessage("Please, select game mode");
     };
 
     render() {
-
         const modes = [];
         for (let mode in this.props.modes) {
             modes.push(mode);
@@ -32,7 +31,6 @@ class GameArea extends Component {
                 <SettingsMenu
                     modes={modes}
                     setMode={this.props.setCurrentMode}
-                    setMessage={this.props.setMessage}
                     startGame={this.props.startGame}
                 />
                 <Message
@@ -40,6 +38,7 @@ class GameArea extends Component {
                 />
                 <Grid
                     size={this.props.modeSettings.field}
+                    squaresStatus={this.props.squaresStatus}
                 />
             </div>
         )
@@ -50,7 +49,8 @@ const mapStateToProps = store => {
     return {
         modes: store.game.modes,
         modeSettings: store.game.currentMode,
-        message: store.game.message
+        message: store.game.message,
+        squaresStatus: store.game.squaresStatus
     }
 };
 
