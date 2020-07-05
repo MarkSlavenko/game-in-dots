@@ -10,12 +10,19 @@ const Square = (props) => {
         if (props.squareStatus === 1) {
             setColor("#74b9ff");
             setTimeout(() => {
-                if (!clicked.current) {
+                if (clicked.current) {
+                    pointToPlayer();
+                } else {
                     pointToComputer();
                 }
                 }, props.delay);
         }
     }, [props.squareStatus]);
+
+    useEffect(()=> {
+        clicked.current = false;
+        setTimeout(() => setColor("white"), 2000);
+    }, [props.delay]);
 
     const pointToComputer = () => {
         props.addPoint("computer");
@@ -24,20 +31,15 @@ const Square = (props) => {
 
     const pointToPlayer = () => {
         props.addPoint("player");
-        setColor("#00e872");
+        // setColor("#00e872");
     };
-
-    useEffect(()=> {
-        clicked.current = false;
-        setTimeout(() => setColor("white"), 2000);
-    }, [props.delay]);
 
     return (
         <button
             onMouseDown={props.squareStatus === 1 ?
                 () => {
                 clicked.current = true;
-                pointToPlayer();
+                setColor("#00e872");
             }
                 : null}
             style={{backgroundColor: color}}

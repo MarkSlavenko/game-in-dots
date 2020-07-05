@@ -7,7 +7,8 @@ import {
     SET_PLAYER_NAME,
     SET_PLAYER_POINTS,
     SET_COMPUTER_POINTS,
-    SET_CURRENT_SQUARE
+    SET_CURRENT_SQUARE,
+    SET_ARRAY_FOR_GAME
 } from '../constants/index.js';
 
 export const setWinnersList = list => {
@@ -73,6 +74,13 @@ export const setCurrentSquare = currentSquare => {
     })
 };
 
+export const setArrayForGame = array => {
+    return({
+        type: SET_ARRAY_FOR_GAME,
+        array
+    })
+};
+
 
 export const loadWinners = () => {
     return (dispatch) => {
@@ -113,54 +121,56 @@ export const setMode = (mode) => {
     }
 };
 
-const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-};
-
 export const startGame = (name) => {
     return async (dispatch, getState) => {
         dispatch(setPlayerName(name));
         dispatch(setComputerPoints(0));
         dispatch(setPlayerPoints(0));
         dispatch(setGameStatus(true));
-        dispatch(setMessage("The game is on!"));
+        dispatch(setMessage("Get ready!"));
 
         const numberOfSquares = Math.pow(getState().game.currentMode.field, 2);
-        const timeDelay = getState().game.currentMode.delay;
-        const numberOfPointsToWin = Math.ceil(numberOfSquares/2);
+        dispatch(setArrayForGame([...Array(numberOfSquares).keys()]));
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        dispatch(setMessage("The game is on!"));
+        dispatch(setRandomSquare());
+    }
+};
 
-        const arrayForGame = [...Array(numberOfSquares).keys()];
-        for (let i = 0; i < numberOfSquares; i++) {
-            let randomIndex = Math.floor(Math.random() * arrayForGame.length);
-            await timeout(timeDelay);
-            if (getState().game.computerPoints >= numberOfPointsToWin) {
-                dispatch(setGameStatus(false));
-                dispatch(setMessage("Computer has won :("));
-                dispatch(addWinner("Computer"));
-                break;
-            } else if (getState().game.playerPoints >= numberOfPointsToWin) {
-                dispatch(setGameStatus(false));
-                dispatch(setMessage(`${getState().game.playerName} has won !!!`));
-                dispatch(addWinner(getState().game.playerName));
-                break;
-            }
-            if (!getState().game.gameIsOn) break;
-            dispatch(setCurrentSquare(arrayForGame.splice(randomIndex, 1)[0]));
-        }
-
-        dispatch(setCurrentSquare(null));
-        dispatch(setGameStatus(false));
+const setRandomSquare = () => {
+    return (dispatch, getState) => {
+        const newArrayForGame = getState().game.arrayForGame;
+        const randomIndex = Math.floor(Math.random() * newArrayForGame.length);
+        dispatch(setCurrentSquare(newArrayForGame.splice(randomIndex, 1)[0]));
+        dispatch(setArrayForGame(newArrayForGame));
     }
 };
 
 export const addPoint = (target) => {
     return (dispatch, getState) => {
+        const numberOfPointsToWin = Math.ceil(Math.pow(getState().game.currentMode.field, 2)/2);
         let computerPoints = getState().game.computerPoints;
         let playerPoints =  getState().game.playerPoints;
+
         if (target === "computer") {
             dispatch(setComputerPoints(++computerPoints));
         } else if (target === "player") {
             dispatch(setPlayerPoints(++playerPoints));
+        }
+
+        if (computerPoints >= numberOfPointsToWin) {
+            dispatch(setGameStatus(false));
+            dispatch(setMessage("Computer has won :("));
+            dispatch(addWinner("Computer"));
+        } else if (playerPoints >= numberOfPointsToWin) {
+            dispatch(setGameStatus(false));
+            dispatch(setMessage(`${getState().game.playerName} has won !!!`));
+            dispatch(addWinner(getState().game.playerName));
+        } else if (getState().game.gameIsOn) {
+                dispatch(setRandomSquare());
+        } else {
+            dispatch(setCurrentSquare(null));
+            dispatch(setGameStatus(false));
         }
     }
 };
@@ -171,16 +181,16 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 
 const addWinner = (name) => {
     return (dispatch) => {
-    const now = new Date();
-    const prettyDateTime = `${now.getHours()}:${now.getMinutes()}; ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
-    const winnerObject = {"winner": name, "date":prettyDateTime};
-    fetch("https://starnavi-frontend-test-task.herokuapp.com/winners",{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(winnerObject)
-    })
-        .then(setTimeout(() => dispatch(loadWinners()), 1000));
+        const now = new Date();
+        const prettyDateTime = `${now.getHours()}:${now.getMinutes()}; ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+        const winnerObject = {"winner": name, "date":prettyDateTime};
+        fetch("https://starnavi-frontend-test-task.herokuapp.com/winners",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(winnerObject)
+        })
+            .then(setTimeout(() => dispatch(loadWinners()), 1000));
     }
 };

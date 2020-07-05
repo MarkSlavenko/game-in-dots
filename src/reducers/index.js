@@ -9,7 +9,8 @@ import {
     SET_PLAYER_NAME,
     SET_PLAYER_POINTS,
     SET_COMPUTER_POINTS,
-    SET_CURRENT_SQUARE
+    SET_CURRENT_SQUARE,
+    SET_ARRAY_FOR_GAME
 } from '../constants/index.js';
 
 
@@ -65,6 +66,10 @@ export const Game = (store = initialState, action) => {
         case SET_CURRENT_SQUARE :
             return {...store,
                 currentSquare: action.currentSquare
+            };
+        case SET_ARRAY_FOR_GAME :
+            return {...store,
+                arrayForGame: action.array
             };
         default :
             return store;
