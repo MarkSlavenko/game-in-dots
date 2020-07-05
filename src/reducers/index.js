@@ -23,7 +23,8 @@ export const initialState = {
     playerName: "",
     currentSquare: null,
     playerPoints: 0,
-    computerPoints: 0
+    computerPoints: 0,
+    arrayForGame: []
 };
 
 

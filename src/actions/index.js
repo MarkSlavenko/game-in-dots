@@ -109,7 +109,7 @@ export const setMode = (mode) => {
         const modeData = getState().game.modes[mode];
         dispatch(setGameStatus(false));
         dispatch(setCurrentMode(modeData));
-        dispatch(setMessage("Enter the name and press \"Play\""));
+        dispatch(setMessage("Enter your name and play"));
     }
 };
 
@@ -127,26 +127,60 @@ export const startGame = (name) => {
 
         const numberOfSquares = Math.pow(getState().game.currentMode.field, 2);
         const timeDelay = getState().game.currentMode.delay;
+        const numberOfPointsToWin = Math.ceil(numberOfSquares/2);
 
         const arrayForGame = [...Array(numberOfSquares).keys()];
         for (let i = 0; i < numberOfSquares; i++) {
-            if (!getState().game.gameIsOn) break;
             let randomIndex = Math.floor(Math.random() * arrayForGame.length);
             await timeout(timeDelay);
+            if (getState().game.computerPoints >= numberOfPointsToWin) {
+                dispatch(setGameStatus(false));
+                dispatch(setMessage("Computer has won :("));
+                dispatch(addWinner("Computer"));
+                break;
+            } else if (getState().game.playerPoints >= numberOfPointsToWin) {
+                dispatch(setGameStatus(false));
+                dispatch(setMessage(`${getState().game.playerName} has won !!!`));
+                dispatch(addWinner(getState().game.playerName));
+                break;
+            }
+            if (!getState().game.gameIsOn) break;
             dispatch(setCurrentSquare(arrayForGame.splice(randomIndex, 1)[0]));
         }
+
         dispatch(setCurrentSquare(null));
         dispatch(setGameStatus(false));
-        dispatch(setMessage("The end!"));
     }
 };
 
 export const addPoint = (target) => {
     return (dispatch, getState) => {
+        let computerPoints = getState().game.computerPoints;
+        let playerPoints =  getState().game.playerPoints;
         if (target === "computer") {
-            dispatch(setComputerPoints(getState().game.computerPoints + 1));
-        } else {
-            dispatch(setPlayerPoints(getState().game.playerPoints + 1));
+            dispatch(setComputerPoints(++computerPoints));
+        } else if (target === "player") {
+            dispatch(setPlayerPoints(++playerPoints));
         }
+    }
+};
+
+const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
+const addWinner = (name) => {
+    return (dispatch) => {
+    const now = new Date();
+    const prettyDateTime = `${now.getHours()}:${now.getMinutes()}; ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+    const winnerObject = {"winner": name, "date":prettyDateTime};
+    fetch("https://starnavi-frontend-test-task.herokuapp.com/winners",{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(winnerObject)
+    })
+        .then(setTimeout(() => dispatch(loadWinners()), 1000));
     }
 };
