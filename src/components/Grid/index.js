@@ -10,7 +10,16 @@ const Grid = (props) => {
         for (let i = 0; i < props.size; i++) {
             let row = [];
             for (let k = 0; k < props.size; k++) {
-                row.push(<Square squareStatus={props.squaresStatus[props.size*i+k]} key={"square" + i + k}/>);
+                let current = 0;
+                if ((props.size*i+k) === props.currentSquare) {
+                    current = 1;
+                }
+                row.push(<Square
+                    squareStatus={current}
+                    delay={props.delay}
+                    addPoint={props.addPoint}
+                    key={"square" + i + k}
+                />);
             }
             grid.push(<div key={"row" + i} className="flex-row">{row}</div>);
         }

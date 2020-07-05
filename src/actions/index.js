@@ -4,7 +4,10 @@ import {
     SET_MODES,
     SET_MESSAGE,
     SET_GAME_STATUS,
-    SET_PLAYER_NAME
+    SET_PLAYER_NAME,
+    SET_PLAYER_POINTS,
+    SET_COMPUTER_POINTS,
+    SET_CURRENT_SQUARE
 } from '../constants/index.js';
 
 export const setWinnersList = list => {
@@ -42,10 +45,31 @@ export const setGameStatus = status => {
     })
 };
 
+export const setPlayerPoints = points => {
+    return({
+        type: SET_PLAYER_POINTS,
+        points
+    })
+};
+
+export const setComputerPoints = points => {
+    return({
+        type: SET_COMPUTER_POINTS,
+        points
+    })
+};
+
 export const setPlayerName = name => {
     return({
         type: SET_PLAYER_NAME,
         name
+    })
+};
+
+export const setCurrentSquare = currentSquare => {
+    return({
+        type: SET_CURRENT_SQUARE,
+        currentSquare
     })
 };
 
@@ -92,7 +116,20 @@ export const setMode = (mode) => {
 export const startGame = (name) => {
     return (dispatch) => {
         dispatch(setPlayerName(name));
+        dispatch(setComputerPoints(0));
+        dispatch(setPlayerPoints(0));
         dispatch(setGameStatus(true));
+        dispatch(setCurrentSquare(5));
         dispatch(setMessage("The game is on!"));
+    }
+};
+
+export const addPoint = (target) => {
+    return (dispatch, getState) => {
+        if (target === "computer") {
+            dispatch(setComputerPoints(getState().game.computerPoints + 1));
+        } else {
+            dispatch(setPlayerPoints(getState().game.playerPoints + 1));
+        }
     }
 };

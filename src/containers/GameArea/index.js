@@ -9,7 +9,8 @@ import {
     loadModes,
     setMode,
     setMessage,
-    startGame
+    startGame,
+    addPoint
 } from '../../actions';
 
 class GameArea extends Component {
@@ -38,7 +39,9 @@ class GameArea extends Component {
                 />
                 <Grid
                     size={this.props.modeSettings.field}
-                    squaresStatus={this.props.squaresStatus}
+                    delay={this.props.modeSettings.delay}
+                    currentSquare={this.props.currentSquare}
+                    addPoint={this.props.addPoint}
                 />
             </div>
         )
@@ -50,7 +53,7 @@ const mapStateToProps = store => {
         modes: store.game.modes,
         modeSettings: store.game.currentMode,
         message: store.game.message,
-        squaresStatus: store.game.squaresStatus
+        currentSquare: store.game.currentSquare
     }
 };
 
@@ -67,6 +70,9 @@ const mapDispatchToProps = dispatch => {
         },
         startGame: (name) => {
             dispatch(startGame(name))
+        },
+        addPoint: (target) => {
+            dispatch(addPoint(target))
         }
     })
 };

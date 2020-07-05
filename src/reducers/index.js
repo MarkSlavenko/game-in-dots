@@ -6,7 +6,10 @@ import {
     SET_MODES,
     SET_MESSAGE,
     SET_GAME_STATUS,
-    SET_PLAYER_NAME
+    SET_PLAYER_NAME,
+    SET_PLAYER_POINTS,
+    SET_COMPUTER_POINTS,
+    SET_CURRENT_SQUARE
 } from '../constants/index.js';
 
 
@@ -18,11 +21,9 @@ export const initialState = {
     message: "",
     gameIsOn: false,
     playerName: "",
-    squaresStatus: [1, 1, 0, -1, 2,
-                    0, 1, 0, 0, 0,
-                    0, 1, 0, 2, -1,
-                    2, -1, 0, -1, 0,
-                    0, 1, 2, -1, -1]
+    currentSquare: null,
+    playerPoints: 0,
+    computerPoints: 0
 };
 
 
@@ -51,6 +52,18 @@ export const Game = (store = initialState, action) => {
         case SET_PLAYER_NAME :
             return {...store,
                 playerName: action.name
+            };
+        case SET_PLAYER_POINTS :
+            return {...store,
+                playerPoints: action.points
+            };
+        case SET_COMPUTER_POINTS :
+            return {...store,
+                computerPoints: action.points
+            };
+        case SET_CURRENT_SQUARE :
+            return {...store,
+                currentSquare: action.currentSquare
             };
         default :
             return store;

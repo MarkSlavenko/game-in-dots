@@ -6,24 +6,12 @@ const Square = (props) => {
     const [color, setColor] = useState("white");
 
     useEffect(() => {
-        console.log("square")
-        if (props.squareStatus) {
-            switch (props.squareStatus) {
-                case 0:
-                    setColor("white");
-                    break;
-                case -1:
-                    setColor("#ED4C67");
-                    break;
-                case 1:
-                    setColor("#74b9ff");
-                    break;
-                case 2:
-                    setColor("#00e872");
-                    break;
-            }
+        console.log("square");
+        if (props.squareStatus === 1) {
+            setColor("#74b9ff");
+            // setTimeout(() => setColor("#ED4C67"), props.delay);
         }
-    });
+    }, [props.squareStatus]);
 
 
     return (
