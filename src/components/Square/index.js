@@ -4,18 +4,25 @@ import "./style.css";
 const Square = (props) => {
 
     const [color, setColor] = useState("white");
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
-        console.log("square");
         if (props.squareStatus === 1) {
             setColor("#74b9ff");
-            // setTimeout(() => setColor("#ED4C67"), props.delay);
+            setTimeout(() => {
+                console.log(clicked);
+                clicked ? setColor("#00e872") : setColor("#ED4C67");
+            }, props.delay);
         }
     }, [props.squareStatus]);
 
 
     return (
-        <button style={{backgroundColor: color}} className="square-button btn"/>
+        <button
+            onClick={() =>setClicked(true)}
+            style={{backgroundColor: color}}
+            className="square-button btn"
+        />
     )
 };
 

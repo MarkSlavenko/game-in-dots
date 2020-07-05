@@ -113,14 +113,31 @@ export const setMode = (mode) => {
     }
 };
 
+const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+};
+
 export const startGame = (name) => {
-    return (dispatch) => {
+    return async (dispatch, getState) => {
         dispatch(setPlayerName(name));
         dispatch(setComputerPoints(0));
         dispatch(setPlayerPoints(0));
         dispatch(setGameStatus(true));
-        dispatch(setCurrentSquare(5));
         dispatch(setMessage("The game is on!"));
+
+        const numberOfSquares = Math.pow(getState().game.currentMode.field, 2);
+        const timeDelay = getState().game.currentMode.delay;
+
+        const arrayForGame = [...Array(numberOfSquares).keys()];
+        for (let i = 0; i < numberOfSquares; i++) {
+            if (!getState().game.gameIsOn) break;
+            let randomIndex = Math.floor(Math.random() * arrayForGame.length);
+            await timeout(timeDelay);
+            dispatch(setCurrentSquare(arrayForGame.splice(randomIndex, 1)[0]));
+        }
+        dispatch(setCurrentSquare(null));
+        dispatch(setGameStatus(false));
+        dispatch(setMessage("The end!"));
     }
 };
 
