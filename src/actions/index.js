@@ -89,11 +89,13 @@ export const loadWinners = () => {
                 error => console.log('Error getting list of winners!', error)
             )
             .then((list) => {
-                let lastWinners;
-                if (list.length >= 10) {
-                    lastWinners = list.slice(list.length-10, list.length).reverse(); // take 10 last winners
-                } else {
-                    lastWinners = list.slice().reverse();
+                let lastWinners = [];
+                if (list) {
+                    if (list.length >= 10) {
+                        lastWinners = list.slice(list.length-10, list.length).reverse(); // take last 10 winners
+                    } else {
+                        lastWinners = list.slice().reverse();
+                    }
                 }
                 dispatch(setWinnersList(lastWinners));
             });
@@ -182,15 +184,21 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 const addWinner = (name) => {
     return (dispatch) => {
         const now = new Date();
-        const prettyDateTime = `${now.getHours()}:${now.getMinutes()}; ${now.getDate()} ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+        const prettyDateTime = `${
+            ('0'+now.getHours()).slice(-2)}:${('0'+now.getMinutes()).slice(-2)};
+            ${('0'+now.getDate()).slice(-2)}
+            ${monthNames[now.getMonth()]}
+            ${now.getFullYear()
+        }`.replace(/\s+/g," ");
         const winnerObject = {"winner": name, "date":prettyDateTime};
-        fetch("https://starnavi-frontend-test-task.herokuapp.com/winners",{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify(winnerObject)
-        })
+        fetch("https://starnavi-frontend-test-task.herokuapp.com/winners",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(winnerObject)
+            })
             .then(setTimeout(() => dispatch(loadWinners()), 1000));
     }
 };

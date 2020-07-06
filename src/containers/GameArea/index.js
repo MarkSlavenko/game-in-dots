@@ -31,6 +31,7 @@ class GameArea extends Component {
                 <h3>Game area</h3>
                 <SettingsMenu
                     modes={modes}
+                    gameIsOn={this.props.gameIsOn}
                     setMode={this.props.setCurrentMode}
                     startGame={this.props.startGame}
                 />
@@ -53,7 +54,8 @@ const mapStateToProps = store => {
         modes: store.game.modes,
         modeSettings: store.game.currentMode,
         message: store.game.message,
-        currentSquare: store.game.currentSquare
+        currentSquare: store.game.currentSquare,
+        gameIsOn: store.game.gameIsOn,
     }
 };
 
