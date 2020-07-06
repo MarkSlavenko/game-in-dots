@@ -7,7 +7,9 @@ const Square = (props) => {
     const clicked = useRef();
 
     useEffect(() => {
-        if (props.squareStatus === 1) {
+        if (props.squareStatus === -1) {
+            setColor("white");
+        } else if (props.squareStatus === 1) {
             setColor("#74b9ff");
             setTimeout(() => {
                 if (clicked.current) {

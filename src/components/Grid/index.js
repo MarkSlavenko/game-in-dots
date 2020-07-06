@@ -11,7 +11,9 @@ const Grid = (props) => {
             let row = [];
             for (let k = 0; k < props.size; k++) {
                 let current = 0;
-                if ((props.size*i+k) === props.currentSquare) {
+                if (props.currentSquare === -1) {
+                    current = -1;
+                } else if ((props.size*i+k) === props.currentSquare) {
                     current = 1;
                 }
                 row.push(<Square

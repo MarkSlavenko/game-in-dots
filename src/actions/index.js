@@ -119,6 +119,7 @@ export const setMode = (mode) => {
         const modeData = getState().game.modes[mode];
         dispatch(setGameStatus(false));
         dispatch(setCurrentMode(modeData));
+        dispatch(setCurrentSquare(-1)); //reset all squares to white color
         dispatch(setMessage("Enter your name and play"));
     }
 };
@@ -128,6 +129,7 @@ export const startGame = (name) => {
         dispatch(setPlayerName(name));
         dispatch(setComputerPoints(0));
         dispatch(setPlayerPoints(0));
+        dispatch(setCurrentSquare(-1)); //reset all squares to white color
         dispatch(setGameStatus(true));
         dispatch(setMessage("Get ready!"));
 
@@ -199,6 +201,6 @@ const addWinner = (name) => {
                 },
                 body: JSON.stringify(winnerObject)
             })
-            .then(setTimeout(() => dispatch(loadWinners()), 1000));
+            .then(setTimeout(() => dispatch(loadWinners()), 1500));
     }
 };

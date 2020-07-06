@@ -17,9 +17,9 @@ const SettingsMenu = (props) => {
         )
     }
 
-    if (props.gameIsOn) {
-        playName = "PLAY AGAIN";
-    }
+    // if (props.gameIsOn) {
+    //     playName = "PLAY AGAIN";
+    // }
 
     const handleChangeMode = (event) => {
         changeMode(event.target.value);
