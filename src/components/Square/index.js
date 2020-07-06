@@ -5,11 +5,13 @@ const Square = (props) => {
 
     const [color, setColor] = useState("white");
     const clicked = useRef();
+    const status = useRef();
 
     useEffect(() => {
-        if (props.squareStatus === -1) {
+        status.current = props.squareStatus;
+        if (status.current === -1) {
             setColor("white");
-        } else if (props.squareStatus === 1) {
+        } else if (status.current === 1) {
             setColor("#74b9ff");
             setTimeout(() => {
                 if (clicked.current) {
@@ -21,24 +23,29 @@ const Square = (props) => {
         }
     }, [props.squareStatus]);
 
-    useEffect(()=> {
-        clicked.current = false;
-        setTimeout(() => setColor("white"), 2000);
-    }, [props.delay]);
-
     const pointToComputer = () => {
-        props.addPoint("computer");
-        setColor("#ED4C67");
+        if (status.current === 1) {
+            clicked.current = false;
+            props.addPoint("computer");
+            setColor("#ED4C67");
+        } else {
+            setColor("white");
+        }
     };
 
     const pointToPlayer = () => {
-        props.addPoint("player");
-        // setColor("#00e872");
+        if (status.current === 1) {
+            clicked.current = false;
+            props.addPoint("player");
+        } else {
+            setColor("white");
+        }
     };
 
     return (
         <button
-            onMouseDown={props.squareStatus === 1 ?
+            onMouseDown={
+                props.squareStatus === 1 ?
                 () => {
                 clicked.current = true;
                 setColor("#00e872");

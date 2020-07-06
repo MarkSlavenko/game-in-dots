@@ -15,10 +15,10 @@ import {
 
 class GameArea extends Component {
 
-    componentDidMount = () => {
+    componentDidMount () {
         this.props.loadModes();
         this.props.setMessage("Please, select game mode");
-    };
+    }
 
     render() {
         const modes = [];

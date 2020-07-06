@@ -119,23 +119,24 @@ export const setMode = (mode) => {
         const modeData = getState().game.modes[mode];
         dispatch(setGameStatus(false));
         dispatch(setCurrentMode(modeData));
-        dispatch(setCurrentSquare(-1)); //reset all squares to white color
+        dispatch(setCurrentSquare(-1)); // reset all squares to white color
         dispatch(setMessage("Enter your name and play"));
     }
 };
 
 export const startGame = (name) => {
     return async (dispatch, getState) => {
-        dispatch(setPlayerName(name));
+        dispatch(setCurrentSquare(-1)); // reset all squares to white color
         dispatch(setComputerPoints(0));
         dispatch(setPlayerPoints(0));
-        dispatch(setCurrentSquare(-1)); //reset all squares to white color
-        dispatch(setGameStatus(true));
+        dispatch(setPlayerName(name));
         dispatch(setMessage("Get ready!"));
 
         const numberOfSquares = Math.pow(getState().game.currentMode.field, 2);
         dispatch(setArrayForGame([...Array(numberOfSquares).keys()]));
         await new Promise(resolve => setTimeout(resolve, 1500));
+        dispatch(setCurrentSquare(-1)); // reset all squares to white color
+        dispatch(setGameStatus(true));
         dispatch(setMessage("The game is on!"));
         dispatch(setRandomSquare());
     }
@@ -168,7 +169,7 @@ export const addPoint = (target) => {
             dispatch(addWinner("Computer"));
         } else if (playerPoints >= numberOfPointsToWin) {
             dispatch(setGameStatus(false));
-            dispatch(setMessage(`${getState().game.playerName} has won !!!`));
+            dispatch(setMessage(`${getState().game.playerName} has won!!!`));
             dispatch(addWinner(getState().game.playerName));
         } else if (getState().game.gameIsOn) {
                 dispatch(setRandomSquare());
@@ -185,10 +186,11 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 
 const addWinner = (name) => {
     return (dispatch) => {
+        dispatch(setCurrentSquare(null));
         const now = new Date();
         const prettyDateTime = `${
-            ('0'+now.getHours()).slice(-2)}:${('0'+now.getMinutes()).slice(-2)};
-            ${('0'+now.getDate()).slice(-2)}
+            ('0' + now.getHours()).slice(-2)}:${('0' + now.getMinutes()).slice(-2)};
+            ${('0' + now.getDate()).slice(-2)}
             ${monthNames[now.getMonth()]}
             ${now.getFullYear()
         }`.replace(/\s+/g," ");

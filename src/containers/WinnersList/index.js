@@ -9,9 +9,9 @@ import List from "../../components/List";
 
 class WinnersList extends Component {
 
-    componentDidMount = async () => {
+    componentDidMount () {
         this.props.loadWinners();
-    };
+    }
 
     render() {
 

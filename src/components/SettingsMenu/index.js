@@ -5,8 +5,8 @@ const SettingsMenu = (props) => {
 
     const[name, changeName] = useState();
     const[gameMode, changeMode] = useState();
+    const[playName, changePlayName] = useState("PLAY");
     const didMountRef = useRef(false);
-    let playName = "PLAY";
 
     let options = [];
     if (props.modes) {
@@ -16,10 +16,6 @@ const SettingsMenu = (props) => {
             </option>
         )
     }
-
-    // if (props.gameIsOn) {
-    //     playName = "PLAY AGAIN";
-    // }
 
     const handleChangeMode = (event) => {
         changeMode(event.target.value);
@@ -38,6 +34,7 @@ const SettingsMenu = (props) => {
     };
 
     const formOnSubmit = (event) => {
+        changePlayName("PLAY AGAIN");
         event.preventDefault();
         props.startGame(name);
     };
@@ -61,7 +58,7 @@ const SettingsMenu = (props) => {
                         />
                     </div>
                     <div className="col my-1">
-                        <button type="submit" className="btn" disabled={props.gameIsOn}>{playName}</button>
+                        <button type="submit" className="btn">{playName}</button>
                     </div>
                 </div>
             </form>
