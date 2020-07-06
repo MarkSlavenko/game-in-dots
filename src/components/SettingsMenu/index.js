@@ -8,11 +8,13 @@ const SettingsMenu = (props) => {
   const didMountRef = useRef(false);
 
   let options = [];
-  const modes = props.modes;
+  const { modes } = props;
   if (modes) {
-    options = modes.map((option, index) => <option key={`'option' ${index}`} value={option}>
-                {option.split('Mode')}
-            </option>);
+    options = modes.map((option, index) => (
+      <option key={`'option' ${index}`} value={option}>
+        {option.split('Mode')}
+      </option>
+    ));
   }
 
   const handleChangeMode = (event) => {
@@ -38,30 +40,30 @@ const SettingsMenu = (props) => {
   };
 
   return (
-        <div className="col-12 settings-menu">
-            <form onSubmit={formOnSubmit}>
-                <div className="form-row align-items-center">
-                    <div className="col my-1">
-                        <select className="custom-select" value={gameMode || ''} onChange={handleChangeMode} required>
-                            <option value="" hidden>Pick game mode</option>
-                            {options}
-                        </select>
-                    </div>
-                    <div className="col my-1">
-                        <input
-                            onChange={handleChangeName}
-                            value={name || ''}
-                            className="form-control"
-                            placeholder="Enter your name"
-                            required
-                        />
-                    </div>
-                    <div className="col my-1">
-                        <button type="submit" className="btn">{playName}</button>
-                    </div>
-                </div>
-            </form>
+    <div className="col-12 settings-menu">
+      <form onSubmit={formOnSubmit}>
+        <div className="form-row align-items-center">
+          <div className="col my-1">
+            <select className="custom-select" value={gameMode || ''} onChange={handleChangeMode} required>
+              <option value="" hidden>Pick game mode</option>
+              {options}
+            </select>
+          </div>
+          <div className="col my-1">
+            <input
+              onChange={handleChangeName}
+              value={name || ''}
+              className="form-control"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+          <div className="col my-1">
+            <button type="submit" className="btn">{playName}</button>
+          </div>
         </div>
+      </form>
+    </div>
   );
 };
 

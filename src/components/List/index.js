@@ -7,15 +7,17 @@ const List = (props) => {
 
   if (props.list) {
     list = props.list;
-      listForShow = list.map((value) => {
-        const [time, date] = value.date.split(';');
-        return (<li className="list-li" key={value.id}>
+    listForShow = list.map((value) => {
+      const [time, date] = value.date.split(';');
+      return (
+        <li className="list-li" key={value.id}>
           <b>{value.winner}</b>
           <span className="text-right ">
             {date} at {time}
           </span>
-        </li>);
-      });
+        </li>
+      );
+    });
   } else {
     listForShow = <h4>List is empty!</h4>;
   }

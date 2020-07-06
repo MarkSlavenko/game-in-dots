@@ -42,8 +42,8 @@ const Square = (props) => {
   }, [props.squareStatus]);
 
   return (
-        <button
-            onMouseDown={
+    <button
+      onMouseDown={
                 props.squareStatus === 1
                   ? () => {
                     clicked.current = true;
@@ -51,9 +51,9 @@ const Square = (props) => {
                   }
                   : null
 }
-            style={{ backgroundColor: color }}
-            className="square-button btn"
-        />
+      style={{ backgroundColor: color }}
+      className="square-button btn"
+    />
   );
 };
 

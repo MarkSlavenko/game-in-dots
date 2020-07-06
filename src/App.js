@@ -7,10 +7,10 @@ function App() {
   return (
     <div className="App">
       <div className="container-fluid">
-          <div className="main-content col-12">
-            <div className="row">
-            <GameArea/>
-            <WinnersList/>
+        <div className="main-content col-12">
+          <div className="row">
+            <GameArea />
+            <WinnersList />
           </div>
         </div>
       </div>

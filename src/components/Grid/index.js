@@ -16,10 +16,10 @@ const Grid = (props) => {
           current = -1;
         }
         row.push(<Square
-                    squareStatus={current}
-                    delay={props.delay}
-                    addPoint={props.addPoint}
-                    key={`'square' ${i} ${k}`}
+          squareStatus={current}
+          delay={props.delay}
+          addPoint={props.addPoint}
+          key={`'square' ${i} ${k}`}
         />);
       }
       grid.push(<div key={`'row' ${i}`} className="flex-row">{row}</div>);
@@ -27,9 +27,9 @@ const Grid = (props) => {
   }
 
   return (
-        <div className="col-12 grid">
-            {grid}
-        </div>
+    <div className="col-12 grid">
+      {grid}
+    </div>
 
   );
 };

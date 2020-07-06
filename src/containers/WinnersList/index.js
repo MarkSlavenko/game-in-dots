@@ -14,19 +14,17 @@ class WinnersList extends Component {
 
   render() {
     return (
-            <div className="winners-list col-12 col-xl-5">
-                <h3>Leader Board (last 10)</h3>
-                <List list={this.props.winnersList} />
-            </div>
+      <div className="winners-list col-12 col-xl-5">
+        <h3>Leader Board (last 10)</h3>
+        <List list={this.props.winnersList} />
+      </div>
     );
   }
 }
 
-const mapStateToProps = (store) => {
-  return {
-    winnersList: store.game.winnersList,
-  };
-};
+const mapStateToProps = (store) => ({
+  winnersList: store.game.winnersList,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   loadWinners: () => {
