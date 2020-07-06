@@ -1,14 +1,10 @@
 import React from 'react';
-import "./style.css";
+import './style.css';
 
-const Message = (props) => {
-
-    return (
-        <div className="col-12 message">
-            <b>{props.text}</b>
-        </div>
-
-    )
-};
+const Message = ({ text }) => (
+  <div className="col-12 message">
+    <b>{text}</b>
+  </div>
+);
 
 export default Message;

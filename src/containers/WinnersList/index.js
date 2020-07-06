@@ -1,44 +1,40 @@
 import React, { Component } from 'react';
-import "./style.css";
-import {connect} from 'react-redux';
+import './style.css';
+import { connect } from 'react-redux';
 
 import {
-    loadWinners,
+  loadWinners,
 } from '../../actions';
-import List from "../../components/List";
+import List from '../../components/List';
 
 class WinnersList extends Component {
+  componentDidMount() {
+    this.props.loadWinners();
+  }
 
-    componentDidMount () {
-        this.props.loadWinners();
-    }
-
-    render() {
-
-        return (
+  render() {
+    return (
             <div className="winners-list col-12 col-xl-5">
                 <h3>Leader Board (last 10)</h3>
-                <List list={this.props.winnersList}/>
+                <List list={this.props.winnersList} />
             </div>
-        )
-    }
+    );
+  }
 }
 
-const mapStateToProps = store => {
-    return {
-        winnersList: store.game.winnersList,
-    }
+const mapStateToProps = (store) => {
+  return {
+    winnersList: store.game.winnersList,
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-    return ({
-        loadWinners: () => {
-            dispatch(loadWinners())
-        },
-    })
-};
+const mapDispatchToProps = (dispatch) => ({
+  loadWinners: () => {
+    dispatch(loadWinners());
+  },
+});
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps,
 )(WinnersList);

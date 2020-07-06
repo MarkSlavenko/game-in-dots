@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
-import WinnersList from "./containers/WinnersList";
-import GameArea from "./containers/GameArea";
-
+import WinnersList from './containers/WinnersList';
+import GameArea from './containers/GameArea';
 
 function App() {
   return (

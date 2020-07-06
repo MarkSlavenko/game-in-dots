@@ -1,60 +1,60 @@
 import React, { useState, useEffect, useRef } from 'react';
-import "./style.css";
+import './style.css';
 
 const Square = (props) => {
+  const [color, setColor] = useState('white');
+  const clicked = useRef();
+  const status = useRef();
 
-    const [color, setColor] = useState("white");
-    const clicked = useRef();
-    const status = useRef();
+  const pointToComputer = () => {
+    if (status.current === 1) {
+      clicked.current = false;
+      props.addPoint('computer');
+      setColor('#ED4C67');
+    } else {
+      setColor('white');
+    }
+  };
 
-    useEffect(() => {
-        status.current = props.squareStatus;
-        if (status.current === -1) {
-            setColor("white");
-        } else if (status.current === 1) {
-            setColor("#74b9ff");
-            setTimeout(() => {
-                if (clicked.current) {
-                    pointToPlayer();
-                } else {
-                    pointToComputer();
-                }
-                }, props.delay);
-        }
-    }, [props.squareStatus]);
+  const pointToPlayer = () => {
+    if (status.current === 1) {
+      clicked.current = false;
+      props.addPoint('player');
+    } else {
+      setColor('white');
+    }
+  };
 
-    const pointToComputer = () => {
-        if (status.current === 1) {
-            clicked.current = false;
-            props.addPoint("computer");
-            setColor("#ED4C67");
+  useEffect(() => {
+    status.current = props.squareStatus;
+    if (status.current === -1) {
+      setColor('white');
+    } else if (status.current === 1) {
+      setColor('#74b9ff');
+      setTimeout(() => {
+        if (clicked.current) {
+          pointToPlayer();
         } else {
-            setColor("white");
+          pointToComputer();
         }
-    };
+      }, props.delay);
+    }
+  }, [props.squareStatus]);
 
-    const pointToPlayer = () => {
-        if (status.current === 1) {
-            clicked.current = false;
-            props.addPoint("player");
-        } else {
-            setColor("white");
-        }
-    };
-
-    return (
+  return (
         <button
             onMouseDown={
-                props.squareStatus === 1 ?
-                () => {
-                clicked.current = true;
-                setColor("#00e872");
-            }
-                : null}
-            style={{backgroundColor: color}}
+                props.squareStatus === 1
+                  ? () => {
+                    clicked.current = true;
+                    setColor('#00e872');
+                  }
+                  : null
+}
+            style={{ backgroundColor: color }}
             className="square-button btn"
         />
-    )
+  );
 };
 
 export default Square;
