@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './style.css';
 
-const Square = (props) => {
+const Square = ({ delay, squareStatus, addPoint }) => {
   const [color, setColor] = useState('white');
   const clicked = useRef();
   const status = useRef();
@@ -9,7 +9,7 @@ const Square = (props) => {
   const pointToComputer = () => {
     if (status.current === 1) {
       clicked.current = false;
-      props.addPoint('computer');
+      addPoint('computer');
       setColor('#ED4C67');
     } else {
       setColor('white');
@@ -19,14 +19,14 @@ const Square = (props) => {
   const pointToPlayer = () => {
     if (status.current === 1) {
       clicked.current = false;
-      props.addPoint('player');
+      addPoint('player');
     } else {
       setColor('white');
     }
   };
 
   useEffect(() => {
-    status.current = props.squareStatus;
+    status.current = squareStatus;
     if (status.current === -1) {
       setColor('white');
     } else if (status.current === 1) {
@@ -37,14 +37,14 @@ const Square = (props) => {
         } else {
           pointToComputer();
         }
-      }, props.delay);
+      }, delay);
     }
-  }, [props.squareStatus]);
+  }, [squareStatus]);
 
   return (
     <button
       onMouseDown={
-                props.squareStatus === 1
+                squareStatus === 1
                   ? () => {
                     clicked.current = true;
                     setColor('#00e872');
