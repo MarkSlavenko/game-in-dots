@@ -15,33 +15,46 @@ import {
 
 class GameArea extends Component {
   componentDidMount() {
-    this.props.loadModes();
-    this.props.setMessage('Please, select game mode');
+    const {
+      loadModes,
+      setMessage,
+    } = this.props;
+
+    loadModes();
+    setMessage('Please, select game mode');
   }
 
   render() {
-    const modes = [];
-    for (const mode in this.props.modes) {
-      modes.push(mode);
-    }
+    const {
+      modes,
+      modeSettings,
+      message,
+      currentSquare,
+      gameIsOn,
+      addPoint,
+      setCurrentMode,
+      startGame,
+    } = this.props;
+
+    const modesArray = Object.keys(modes);
 
     return (
       <div className="game-area col-12 col-xl-7 text-center">
         <h3>Game area</h3>
         <SettingsMenu
-          modes={modes}
-          gameIsOn={this.props.gameIsOn}
-          setMode={this.props.setCurrentMode}
-          startGame={this.props.startGame}
+          modes={modesArray}
+          gameIsOn={gameIsOn}
+          setMode={setCurrentMode}
+          startGame={startGame}
         />
         <Message
-          text={this.props.message}
+          text={message}
         />
         <Grid
-          size={this.props.modeSettings.field}
-          delay={this.props.modeSettings.delay}
-          currentSquare={this.props.currentSquare}
-          addPoint={this.props.addPoint}
+          size={modeSettings.field}
+          delay={modeSettings.delay}
+          currentSquare={currentSquare}
+          addPoint={addPoint}
         />
       </div>
     );
