@@ -4,7 +4,7 @@ import './style.css';
 const List = ({ list }) => {
   let listForShow;
 
-  if (list) {
+  if (list.length) {
     listForShow = list.map((value) => {
       const [time, date] = value.date.split(';');
       return (
