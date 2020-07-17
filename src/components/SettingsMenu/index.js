@@ -10,8 +10,8 @@ const SettingsMenu = (props) => {
   let options = [];
   const { modes } = props;
   if (modes) {
-    options = modes.map((option, index) => (
-      <option key={`'option' ${index}`} value={option}>
+    options = modes.map((option) => (
+      <option key={option} value={option}>
         {option.split('Mode')}
       </option>
     ));
