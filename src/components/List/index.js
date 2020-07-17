@@ -1,12 +1,10 @@
 import React from 'react';
 import './style.css';
 
-const List = (props) => {
-  let list = [];
+const List = ({ list }) => {
   let listForShow;
 
-  if (props.list) {
-    list = props.list;
+  if (list) {
     listForShow = list.map((value) => {
       const [time, date] = value.date.split(';');
       return (
