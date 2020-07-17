@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
 import './style.css';
 import { connect } from 'react-redux';
+import List from '../../components/List';
 
 import {
   loadWinners,
 } from '../../actions';
-import List from '../../components/List';
 
 class WinnersList extends Component {
   componentDidMount() {
-    this.props.loadWinners();
+    const {
+      loadWinners,
+    } = this.props;
+
+    loadWinners();
   }
 
   render() {
+    const {
+      winnersList,
+    } = this.props;
+
     return (
       <div className="winners-list col-12 col-xl-5">
         <h3>Leader Board (last 10)</h3>
-        <List list={this.props.winnersList} />
+        <List list={winnersList} />
       </div>
     );
   }
