@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './style.css';
 
-const SettingsMenu = (props) => {
+const SettingsMenu = ({ modes, setMode, startGame }) => {
   const [name, changeName] = useState();
   const [gameMode, changeMode] = useState();
   const [playName, changePlayName] = useState('PLAY');
   const didMountRef = useRef(false);
 
   let options = [];
-  const { modes } = props;
   if (modes) {
     options = modes.map((option) => (
       <option key={option} value={option}>
@@ -23,7 +22,7 @@ const SettingsMenu = (props) => {
 
   useEffect(() => { //  callback to set gameMode and setMessage after selecting the mode
     if (didMountRef.current) {
-      props.setMode(gameMode);
+      setMode(gameMode);
     } else {
       didMountRef.current = true;
     }
@@ -36,7 +35,7 @@ const SettingsMenu = (props) => {
   const formOnSubmit = (event) => {
     changePlayName('PLAY AGAIN');
     event.preventDefault();
-    props.startGame(name);
+    startGame(name);
   };
 
   return (
