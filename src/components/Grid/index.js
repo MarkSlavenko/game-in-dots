@@ -1,28 +1,27 @@
 import React from 'react';
-import './style.css';
-import Square from '../Square';
+import GridRow from '../GridRow';
 
-const Grid = (props) => {
+const Grid = ({
+  size,
+  currentSquare,
+  delay,
+  addPoint,
+}) => {
   const grid = [];
 
-  if (props.size) {
-    for (let i = 0; i < props.size; i += 1) {
-      const row = [];
-      for (let k = 0; k < props.size; k += 1) {
-        let current = 0;
-        if ((props.size * i + k) === props.currentSquare) {
-          current = 1;
-        } else if (props.currentSquare === -1) {
-          current = -1;
-        }
-        row.push(<Square
-          squareStatus={current}
-          delay={props.delay}
-          addPoint={props.addPoint}
-          key={`'square' ${i} ${k}`}
-        />);
-      }
-      grid.push(<div key={`'row' ${i}`} className="flex-row">{row}</div>);
+  if (size) {
+    for (let i = 0; i < size; i += 1) {
+      grid.push(
+        <div key={`'row' ${i}`} className="flex-row">
+          <GridRow
+            size={size}
+            rowNumber={i}
+            currentSquare={currentSquare}
+            delay={delay}
+            addPoint={addPoint}
+          />
+        </div>
+      );
     }
   }
 
